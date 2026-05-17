@@ -8,3 +8,9 @@ module "virtual_network" {
     vnet = var.vnet
     depends_on = [ module.resource_group ]
 }
+
+module "subnet" {
+    source = "../../modules/subnet"
+    snet = var.snet
+    depends_on = [ module.virtual_network ]
+}

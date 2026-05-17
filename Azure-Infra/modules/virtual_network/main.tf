@@ -1,4 +1,4 @@
-resource "azurerm_virtual_network" "aks_vnt" {
+resource "azurerm_virtual_network" "vnt" {
   for_each = var.vnet  
   name                = each.value.name
   address_space       = each.value.address_space
