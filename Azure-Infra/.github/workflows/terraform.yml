@@ -18,12 +18,12 @@ jobs:
       run: |
         pwd
         ls -l 
-        ls -l environmnets/dev || true
+        ls -l environments/dev || true
 
     - name: Terrform steup
       uses: hashicorp/setup-terraform@v4
       with:
-       terraform_version: 1.53.3
+       terraform_version: 1.15.3
     
     - name: Azure Login
       uses: azure/login@v1
@@ -38,7 +38,7 @@ jobs:
 
     - name: Terraform Init
       working-directory: ./environments/dev
-      run: terrform init
+      run: terraform init
 
     - name: Terraform validate
       working-directory: ./environments/dev  
@@ -46,7 +46,7 @@ jobs:
 
     - name: Terraform plan
       working-directory: ./environments/dev  
-      run: terraform plan -out-tfplan
+      run: terraform plan -out=tfplan
 
     - name: Upload Terraform plan
       uses: actions/upload-artifact@v4
@@ -90,7 +90,7 @@ jobs:
 
     - name: Terraform Init
       working-directory: ./environments/dev
-      run: terrform init
+      run: terraform init
 
     - name: Terraform apply
       working-directory: ./environments/dev
