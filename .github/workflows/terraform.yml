@@ -18,7 +18,7 @@ jobs:
       run: |
         pwd
         ls -l 
-        ls -l environments/dev || true
+        ls -l Azure-Infra/environments/dev || true
 
     - name: Terrform steup
       uses: hashicorp/setup-terraform@v4
@@ -37,22 +37,22 @@ jobs:
           }
 
     - name: Terraform Init
-      working-directory: ./environments/dev
+      working-directory: .Azure-Infra/environments/dev
       run: terraform init
 
     - name: Terraform validate
-      working-directory: ./environments/dev  
+      working-directory: .Azure-Infra/environments/dev  
       run: terraform validate
 
     - name: Terraform plan
-      working-directory: ./environments/dev  
+      working-directory: .Azure-Infra/environments/dev  
       run: terraform plan -out=tfplan
 
     - name: Upload Terraform plan
       uses: actions/upload-artifact@v4
       with:
         name: tfplan
-        path: ./environments/dev/tfplan
+        path: .Azure-Infra/environments/dev/tfplan
 
   terraform-apply:
     name: Terraform apply
@@ -86,12 +86,12 @@ jobs:
       uses: actions/download-artifact@v4
       with:
         name: tfplan
-        path: ./environments/dev
+        path: .Azure-Infra/environments/dev
 
     - name: Terraform Init
-      working-directory: ./environments/dev
+      working-directory: .Azure-Infra/environments/dev
       run: terraform init
 
     - name: Terraform apply
-      working-directory: ./environments/dev
+      working-directory: .Azure-Infra/environments/dev
       run: terraform apply -auto-approve tfplan
