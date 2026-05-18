@@ -1,4 +1,5 @@
 resource "azurerm_virtual_network_peering" "local_to_remote" {
+  provider = azurerm.hub
   name                      = var.local_to_remote.name
   resource_group_name       = var.local_to_remote.rg_name
   virtual_network_name      = var.local_to_remote.vnt_name
@@ -10,8 +11,6 @@ resource "azurerm_virtual_network_peering" "local_to_remote" {
 }
 
 resource "azurerm_virtual_network_peering" "remote_to_local" {
-  provider = azurerm.hub 
-
   name                      = var.remote_to_local.name
   resource_group_name       = var.remote_to_local.rg_name
   virtual_network_name      = var.remote_to_local.vnt_name
