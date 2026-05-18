@@ -1,4 +1,4 @@
-variable "vnet" {
+variable "vnt" {
     type = map(object({
         name = string,
         address_space = list(string),

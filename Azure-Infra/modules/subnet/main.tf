@@ -1,5 +1,5 @@
-resource "azurerm_subnet" "snet" {
-  for_each = var.snet
+resource "azurerm_subnet" "snt" {
+  for_each = var.snt
   name                 = each.value.name
   resource_group_name  = each.value.rg_name
   virtual_network_name = each.value.vnt_name

@@ -5,12 +5,24 @@ module "resource_group" {
 
 module "virtual_network" {
     source = "../../modules/virtual_network"
-    vnet = var.vnet
+    vnt = var.vnt
     depends_on = [ module.resource_group ]
 }
 
 module "subnet" {
     source = "../../modules/subnet"
-    snet = var.snet
+    snt = var.snt
     depends_on = [ module.virtual_network ]
+}
+
+module "virtual_network_peering" {
+    source = "../../modulles/virtual_network_peering"
+    local_to_remote = var.local_to_remote
+    depends_on = [ module.subnet ]
+}
+
+module "virtual_network_peering" {
+    source = "../../modulles/virtual_network_peering"
+    remote_to_local = var.remote_to_local
+    depends_on = [ module.subnet ]
 }

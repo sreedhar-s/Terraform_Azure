@@ -5,7 +5,7 @@ rgs = {
     }
 }
 
-vnet = {
+vnt = {
     vnt = {
         name = "DT-DEV-VNT"
         address_space = ["10.101.254.64/27"]
@@ -14,17 +14,39 @@ vnet = {
     }
 }
 
-snet = {
-    snet1 = {
+snt = {
+    snt1 = {
         name = "DT-DEV-SNET1"
         address_prefixes = ["10.101.254.64/28"]
         rg_name = "DT-VNT-RG"
         vnt_name = "DT-DEV-VNT"
     },
-    snet2 = {
+    snt2 = {
         name = "DT-DEV-SNET2"
         address_prefixes = ["10.101.254.80/28"]
         rg_name = "DT-VNT-RG"
         vnt_name = "DT-DEV-VNT"
     }
+}
+
+remote_to_local = {
+  name = "OI-VNT-TO-DT-DEV-VNT"
+  rg_name = "DT-VNT-RG"
+  vnt_name = "OI-VNT"
+  local_vnt_id = module.virtual_network.vnt[vnt].id
+  allow_virtual_network_access = true,
+  allow_forwarded_traffic = true,
+  allow_gateway_transit = true,
+  use_remote_gateways = false
+}
+
+local_to_remote = {
+  name = "DT-DEV-VNT-TO-OI-VNT"
+  rg_name = "DT-VNT-RG"
+  vnt_name = "DT-DEV-VNT"
+  remote_vnt_id = data.azurerm_virtual_network.remote_vnt.id
+  allow_virtual_network_access = true,
+  allow_forwarded_traffic = true,
+  allow_gateway_transit = false,
+  use_remote_gateways = true
 }

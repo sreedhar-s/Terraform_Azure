@@ -1,4 +1,4 @@
-variable "snet" {
+variable "snt" {
     type = map(object({
         name = string,
         address_prefixes = list(string),

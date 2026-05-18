@@ -18,3 +18,9 @@ terraform{
 provider "azurerm" {
     features {}
 }
+
+provider "azurerm" {
+    alias = "hub"
+    features {}
+    subscription_id = "c4c1d27e-dfb0-476d-90b9-16e8f0794214"
+}
