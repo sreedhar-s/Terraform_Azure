@@ -15,12 +15,12 @@ module "subnet" {
     depends_on = [ module.virtual_network ]
 }
 
-module "virtual_network_peering" {   
-    providers = {
-        azurerm = azurerm.hub
-    }
+module "spoke_to_hub_peering" {  
+  providers = {
+    azurerm = azurerm.hub
+  }    
   source = "../../modules/virtual_network_peering"
-  local_to_remote = {
+  vnt_peering = {
     name = "DT-DEV-VNT-TO-OI-VNT"
     rg_name = "DT-VNT-RG"
     vnt_name = "DT-DEV-VNT"
@@ -31,15 +31,20 @@ module "virtual_network_peering" {
     remote_vnt_id = data.azurerm_virtual_network.hub_vnt.id
   }
 
-  remote_to_local = {
-    name = "OI-VNT-TO-DT-DEV-VNT"
+  depends_on = [module.virtual_network]
+}
+
+module "hub_to_spoke_peering" {    
+  source = "../../modules/virtual_network_peering"
+  vnt_peering = {
+    name = "DT-DEV-VNT-TO-OI-VNT"
     rg_name = "DT-VNT-RG"
-    vnt_name = "OI-VNT"
-    allow_virtual_network_access = true,
-    allow_forwarded_traffic = true,
-    allow_gateway_transit = true,
-    use_remote_gateways = false
-    local_vnt_id = module.virtual_network.vnt_id
+    vnt_name = "DT-DEV-VNT"
+    allow_virtual_network_access = true
+    allow_forwarded_traffic = true
+    allow_gateway_transit = false
+    use_remote_gateways = true
+    remote_vnt_id = module.virtual_network.vnt_id["DT-DEV-VNT"]
   }
 
   depends_on = [module.virtual_network]
