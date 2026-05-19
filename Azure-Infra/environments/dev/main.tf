@@ -17,8 +17,8 @@ module "subnet" {
 
 module "spoke_to_hub_peering" {  
   providers = {
-    azurerm = azurerm.hub
-  }    
+    azurerm = azurerm
+  }      
   source = "../../modules/virtual_network_peering"
   vnt_peering = {
     name = "DT-DEV-VNT-TO-OI-VNT"
@@ -34,7 +34,10 @@ module "spoke_to_hub_peering" {
   depends_on = [module.virtual_network]
 }
 
-module "hub_to_spoke_peering" {    
+module "hub_to_spoke_peering" {   
+  providers = {
+    azurerm = azurerm.hub
+  } 
   source = "../../modules/virtual_network_peering"
   vnt_peering = {
     name = "DT-DEV-VNT-TO-OI-VNT"
