@@ -1,5 +1,4 @@
 resource "azurerm_virtual_network_peering" "local_to_remote" {
-  provider = azurerm.hub
   name                      = var.local_to_remote.name
   resource_group_name       = var.local_to_remote.rg_name
   virtual_network_name      = var.local_to_remote.vnt_name

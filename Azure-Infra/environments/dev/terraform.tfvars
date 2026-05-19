@@ -29,22 +29,4 @@ snt = {
     }
 }
 
-remote_to_local = {
-  name = "OI-VNT-TO-DT-DEV-VNT"
-  rg_name = "DT-VNT-RG"
-  vnt_name = "OI-VNT"
-  allow_virtual_network_access = true,
-  allow_forwarded_traffic = true,
-  allow_gateway_transit = true,
-  use_remote_gateways = false
-}
 
-local_to_remote = {
-  name = "DT-DEV-VNT-TO-OI-VNT"
-  rg_name = "DT-VNT-RG"
-  vnt_name = "DT-DEV-VNT"
-  allow_virtual_network_access = true
-  allow_forwarded_traffic = true
-  allow_gateway_transit = false
-  use_remote_gateways = true
-}
