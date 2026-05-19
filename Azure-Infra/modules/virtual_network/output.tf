@@ -1,9 +1,13 @@
 output "vnt_id" {
   description = "The ID of the created virtual network"
-  value       = azurerm_virtual_network.vnt.id
+    value       = {
+        for k, v in azurerm_virtual_network.vnt : k => v.id
+    }
 }
 
 output "vnt_name" {
   description = "The name of the virtual network"
-  value       = azurerm_virtual_network.vnt.name
+  value       = {
+        for k, v in azurerm_virtual_network.vnt : k => v.name
+  }
 }
