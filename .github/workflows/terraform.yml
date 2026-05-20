@@ -12,7 +12,7 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
 
     - name: folder structure
       run: |
@@ -26,7 +26,7 @@ jobs:
        terraform_version: 1.15.3
     
     - name: Azure Login
-      uses: azure/login@v1
+      uses: azure/login@v3
       with:
         creds: |
           {
@@ -49,7 +49,7 @@ jobs:
       run: terraform plan -out=tfplan
 
     - name: Upload Terraform plan
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v6
       with:
         name: tfplan
         path: Azure-Infra/environments/dev/tfplan
@@ -64,15 +64,15 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
 
     - name: HashiCorp - Setup Terraform
-      uses: hashicorp/setup-terraform@v3
+      uses: hashicorp/setup-terraform@v4
       with:
         terraform_version: 1.15.3
 
     - name: Azure Login
-      uses: azure/login@v1
+      uses: azure/login@v3
       with:
         creds: |
           {
@@ -83,7 +83,7 @@ jobs:
           }
 
     - name: Download Terraform Plan
-      uses: actions/download-artifact@v4
+      uses: actions/download-artifact@v6
       with:
         name: tfplan
         path: Azure-Infra/environments/dev
