@@ -47,7 +47,7 @@ jobs:
 
     - name: Terraform plan
       working-directory: Azure-Infra/environments/dev  
-      run: terraform plan -out=tfplan
+      run: terraform plan -input=false -out=tfplan
 
     - name: Upload Terraform plan
       uses: actions/upload-artifact@v6
