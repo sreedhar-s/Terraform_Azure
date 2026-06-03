@@ -2,6 +2,11 @@ rgs = {
     vnt_rg = {
         name = "DT-VNT-RG"
         location = "southeastasia"
+    },
+
+    rtb_rg = {
+        name = "DT-RTB-RG"
+        location = "southeastasia"
     }
 }
 
@@ -29,4 +34,10 @@ snt = {
     }
 }
 
-
+route_table = {
+    rtb1 = {
+        name = "DT-RTB-DEV-4001"
+        location = "southeastasia"
+        rg_name = "DT-RTB-RG"
+    }
+}

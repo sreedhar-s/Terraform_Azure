@@ -49,3 +49,4 @@ module "hub_to_spoke_peering" {
 
   depends_on = [module.virtual_network]
 }
+
