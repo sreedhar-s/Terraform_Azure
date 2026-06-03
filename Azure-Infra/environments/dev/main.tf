@@ -50,3 +50,9 @@ module "hub_to_spoke_peering" {
   depends_on = [module.virtual_network]
 }
 
+module "route_table" {
+    source = "../../modules/route_table"
+    route_table = var.route_table
+
+    depends_on = [ module.resource_group ]
+}
