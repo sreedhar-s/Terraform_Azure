@@ -56,3 +56,27 @@ module "route_table" {
 
     depends_on = [ module.resource_group ]
 }
+
+module "routes" {
+    source = "../../modules/routes"
+    routes = var.routes
+
+    depends_on = [ module.route_table ]
+}
+
+module "route_table_snt_association" {
+    source = "../../modules/route_table_snt_association"
+    route_table_snt_association = {
+        rtb_snt_1 = {
+            subnet_id = module.subnet.snt_id["snt1"]
+            route_table_id = module.route_table.rtb_id["rtb1"]
+        },
+
+        rtb_snt_2 = {
+            subnet_id = module.subnet.snt_id["snt2"]
+            route_table_id = module.route_table.rtb_id["rtb1"]
+        },
+    }
+
+    depends_on = [ module.route_table, module.subnet ]
+}

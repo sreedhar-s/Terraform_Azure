@@ -41,3 +41,14 @@ route_table = {
         rg_name = "DT-RTB-RG"
     }
 }
+
+routes = {
+    route1 = {
+        name = "Default-Internet"
+        resource_group_name = "DT-RTB-RG"
+        route_table_name = "DT-RTB-DEV-4001"
+        address_prefix = "0.0.0.0/0"
+        next_hop_type = "VirtualAppliance"
+        next_hop_in_ip_address = "10.101.0.196"
+    }
+}

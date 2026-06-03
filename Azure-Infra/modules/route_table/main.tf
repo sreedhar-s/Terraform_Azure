@@ -4,3 +4,4 @@ resource "azurerm_route_table" "route_table" {
   location            = each.value.location
   resource_group_name = each.value.rg_name
 }
+

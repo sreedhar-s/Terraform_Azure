@@ -5,3 +5,4 @@ variable "route_table" {
         rg_name = string
     }))
 }
+
