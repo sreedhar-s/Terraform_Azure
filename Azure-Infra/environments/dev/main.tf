@@ -74,9 +74,9 @@ module "dns_record" {
     source = "../../modules/dns_record"
     dns_record = {
         dns_record1 = {
-            name                = dtstgdev4001
+            name                = "dtstgdev4001"
             zone_name           = data.azurerm_private_dns_zone.private_dns_zone.name
-            resource_group_name = data.azurerm_private_dns_zone.resource_group_name
+            resource_group_name = data.azurerm_private_dns_zone.private_dns_zone.resource_group_name
             ttl                 = 10
             records             = [module.private_endpoint.pvl["dtstgdev4001-pvl"].private_ip_address]
         }
