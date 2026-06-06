@@ -9,7 +9,7 @@ variable "pvl" {
         name                           = string
         private_connection_resource_id = string
         is_manual_connection           = bool
-        subresource_names              = list[string]
+        subresource_names              = list(string)
     })
 
     private_dns_zone_group = object({
