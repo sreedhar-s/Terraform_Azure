@@ -133,7 +133,7 @@ module "windows_wm" {
             admin_password      = "CA3@#mw(fg262023"
 
             network_interface_ids = [
-                module.network_interface.nic_id["nic"]
+                module.network_interface.nic_id["nic1"]
             ]
 
             os_disk = {
