@@ -6,6 +6,7 @@ resource "azurerm_storage_account" "stg_acc" {
   account_tier             = each.value.account_tier
   account_replication_type = each.value.account_replication_type
   public_network_access_enabled = each.value.public_network_access_enabled
+  allow_nested_items_to_be_public = each.value.allow_nested_items_to_be_public
 
   blob_properties {
     container_delete_retention_policy {

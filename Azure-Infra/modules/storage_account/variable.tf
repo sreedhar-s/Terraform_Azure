@@ -6,6 +6,7 @@ variable "stg_acc" {
         account_tier             = string
         account_replication_type = string
         public_network_access_enabled = bool
+        allow_nested_items_to_be_public = bool
 
         blob_properties = object(
             {
