@@ -4,29 +4,14 @@ data "azurerm_virtual_network" "hub_vnt" {
   resource_group_name = "OI-VNT-RG"
 }
 
-data "azurerm_resource_group" "gallery_rg" {
-  provider = azurerm.Infra-Monitoring-Backup
-  name = "WIN-GLD-CMN-RG"
+data "azurerm_private_dns_zone" "private_dns_zone" {
+  provider = azurerm.Olam-Shared-Infrastructure
+  name                = "privatelink.blob.core.windows.net"
+  resource_group_name = "OI-DNS-PRD-EG"
 }
 
-data "azurerm_shared_image_gallery" "image-gallery" {
-  provider = azurerm.Infra-Monitoring-Backup
-  name                = "OlamImages"
-  resource_group_name = data.azurerm_resource_group.gallery_rg.name
+data "azurerm_subnet" "snt" {
+  name                 = "DT-DEV-SNET1"
+  virtual_network_name = "DT-DEV-VNT"
+  resource_group_name  = "DT-VNT-RG"
 }
-
-data "azurerm_shared_image" "shared_image" {
-  provider = azurerm.Infra-Monitoring-Backup
-  name                = "Ubutu-22.04-Jan2026"
-  gallery_name        = data.azurerm_shared_image_gallery.image-gallery.name
-  resource_group_name = data.azurerm_resource_group.gallery_rg.name
-}
-
-data "azurerm_shared_image_version" "image_version" {
-  provider = azurerm.Infra-Monitoring-Backup
-  name                = "0.0.1"
-  image_name          = data.azurerm_shared_image.shared_image.name
-  gallery_name        = data.azurerm_shared_image_gallery.image-gallery.name
-  resource_group_name = data.azurerm_resource_group.gallery_rg.name
-}
-

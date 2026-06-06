@@ -20,7 +20,7 @@ provider "azurerm" {
 }
 
 provider "azurerm" {
-    alias = "hub"
+    alias = "Olam-Shared-Infrastructure"
     features {}
     subscription_id = "c4c1d27e-dfb0-476d-90b9-16e8f0794214"
 }
