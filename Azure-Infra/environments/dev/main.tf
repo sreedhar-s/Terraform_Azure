@@ -85,15 +85,17 @@ module "network_interface" {
     source = "../../modules/network_interface_card"
 
     nic = {
-        name                = "DT-TST-DEV-4001-nic"
-        location            = "southeastasia"
-        resource_group_name = module.resource_group.rg_name["vm_rg"]
+        "nic1" = {
+            name                = "DT-TST-DEV-4001-nic"
+            location            = "southeastasia"
+            resource_group_name = module.resource_group.rg_name["vm_rg"]
 
-        ip_configuration = [{
-            name                          = "ipconfig1"
-            subnet_id                     = module.subnet.snt_id["snt1"]
-            private_ip_address_allocation = "Dynamic"
-        }]
+            ip_configuration = [{
+                name                          = "ipconfig1"
+                subnet_id                     = module.subnet.snt_id["snt1"]
+                private_ip_address_allocation = "Dynamic"
+            }]
+        }
     }
 
     depends_on = [ module.resource_group, module.subnet ]
@@ -122,33 +124,35 @@ module "windows_wm" {
     source = "../../modules/windows_vm"
 
     windows_vm = {
-        name                = "DT-TST-DEV-4001"
-        resource_group_name = module.resource_group.rg_name["vm_rg"]
-        location            = "southeastasia"
-        size                = "Standard_B2s"
-        admin_username      = "azureadmin"
-        admin_password      = "CA3@#mw(fg262023"
+        "windows_vm1" = {
+            name                = "DT-TST-DEV-4001"
+            resource_group_name = module.resource_group.rg_name["vm_rg"]
+            location            = "southeastasia"
+            size                = "Standard_B2s"
+            admin_username      = "azureadmin"
+            admin_password      = "CA3@#mw(fg262023"
 
-        network_interface_ids = [
-            module.network_interface.nic_id["nic"]
-        ]
+            network_interface_ids = [
+                module.network_interface.nic_id["nic"]
+            ]
 
-        os_disk = {
-            caching              = "ReadWrite"
-            storage_account_type = "Standard_LRS"
+            os_disk = {
+                caching              = "ReadWrite"
+                storage_account_type = "Standard_LRS"
+            }
+
+            encryption_at_host_enabled = true
+
+            source_image_id = data.azurerm_shared_image_version.image_version.id
+
+            tags = {
+                "Application name" = "Testing",
+                "Environment" = "Dev"
+            }
+
+            depends_on = [ 
+                module.network_interface
+            ]
         }
-
-        encryption_at_host_enabled = true
-
-        source_image_id = data.azurerm_shared_image_version.image_version.id
-
-        tags = {
-            "Application name" = "Testing",
-            "Environment" = "Dev"
-        }
-
-        depends_on = [ 
-            module.network_interface
-        ]
     }
 }

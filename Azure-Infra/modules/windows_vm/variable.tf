@@ -12,10 +12,14 @@ variable "windows_vm" {
 
         network_interface_ids = list(string)
 
-        caching = string
-        storage_account_type = string
+        os_disk = {
+            caching = string
+            storage_account_type = string
+        }
 
-        storage_account_uri = string
+        boot_diagnostics = {
+            storage_account_uri = string
+        }
 
         encryption_at_host_enabled = bool
 
