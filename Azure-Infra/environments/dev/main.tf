@@ -103,7 +103,15 @@ module "network_interface" {
 
 module "network_security_group" {
     source = "../../modules/network_security_group"
-    nsg = var.nsg
+    nsg = {
+        nsg1 = {
+            name = "DT-DEV-TST-4001-nsg"
+            location = "southeastasia"
+            resource_group_name = module.resource_group.rg_name["vm_rg"]
+        }
+    }
+
+    depends_on = [ module.resource_group]
 }
 
 module "nsg_association" {

@@ -43,11 +43,3 @@ variable "routes" {
         next_hop_in_ip_address = string
     }))
 }
-
-variable "nsg" {
-    type = map(object({
-        name                = string
-        location            = string
-        resource_group_name = string
-    }))
-}

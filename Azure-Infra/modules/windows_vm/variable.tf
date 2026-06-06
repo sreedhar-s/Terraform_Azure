@@ -1,6 +1,3 @@
-
-
-
 variable "windows_vm" {
     type = map(object({
         name = string
