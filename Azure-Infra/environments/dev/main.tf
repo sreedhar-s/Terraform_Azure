@@ -200,3 +200,111 @@ module "windows_wm" {
         }
     }
 }
+
+module "network_interface" {
+    source = "../../modules/network_interface_card"
+
+    nic = {
+        "nic1" = {
+            name                = "DT-TST-DEV-4001-nic"
+            location            = "southeastasia"
+            resource_group_name = module.resource_group.rg_name["vm_rg"]
+
+            ip_configuration = [{
+                name                          = "ipconfig1"
+                subnet_id                     = module.subnet.snt_id["snt1"]
+                private_ip_address_allocation = "Dynamic"
+            }]
+        },
+
+         "nic2" = {
+            name                = "DT-TST-DEV-4002-nic"
+            location            = "southeastasia"
+            resource_group_name = module.resource_group.rg_name["vm_rg"]
+
+            ip_configuration = [{
+                name                          = "ipconfig1"
+                subnet_id                     = module.subnet.snt_id["snt1"]
+                private_ip_address_allocation = "Dynamic"
+            }]
+        }
+    }
+
+    depends_on = [ module.resource_group, module.subnet ]
+}
+
+module "network_security_group" {
+    source = "../../modules/network_security_group"
+    nsg = {
+        nsg1 = {
+            name = "DT-DEV-TST-4001-nsg"
+            location = "southeastasia"
+            resource_group_name = module.resource_group.rg_name["vm_rg"]
+        },
+
+        nsg2 = {
+            name = "DT-DEV-TST-4002-nsg"
+            location = "southeastasia"
+            resource_group_name = module.resource_group.rg_name["vm_rg"]
+        }
+    }
+
+    depends_on = [ module.resource_group]
+}
+
+module "nsg_association" {
+    source = "../../modules/nsg_association"
+
+    nsg_association = {
+        network_interface_id = module.network_interface.nic_id["nic2"]
+        network_security_group_id = module.network_security_group.nsg_id["nsg2"]
+    }
+
+    depends_on = [ 
+        module.network_interface,
+        module.network_security_group
+    ]
+}
+
+
+module "linux_wm" {
+    source = "../../modules/linux_vm"
+
+    linux_vm = {
+        "linux_vm1" = {
+            name                = "DT-TST-DEV-4002"
+            resource_group_name = module.resource_group.rg_name["vm_rg"]
+            location            = "southeastasia"
+            size                = "Standard_B2s"
+            admin_username      = "azureadmin"
+            admin_password      = "CA3@#mw(fg262023"
+
+            network_interface_ids = [
+                module.network_interface.nic_id["nic2"]
+            ]
+
+            os_disk = {
+                caching              = "ReadWrite"
+                storage_account_type = "Standard_LRS"
+            }
+
+            encryption_at_host_enabled = true
+
+            source_image_id = data.azurerm_shared_image_version.image_version.id
+
+            boot_diagnostics = {
+                storage_account_uri = module.storage_account.primary_blob_endpoint["stg_acc1"]
+            }
+
+            tags = {
+                "Application name" = "Testing",
+                "Environment" = "Dev"
+            }
+
+            depends_on = [ 
+                module.network_interface,
+                module.storage_account
+            ]
+        }
+    }
+}
