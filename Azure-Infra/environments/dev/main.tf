@@ -134,7 +134,7 @@ module "storage_account" {
     stg_acc = {
         stg_acc1 = {
             name = "dtstgdiag5001"
-            resource_group_name      = module.resource_group_name.rg_name["stg_rg"]
+            resource_group_name      = module.resource_group.rg_name["stg_rg"]
             location                 = "southeastasia"
             account_tier             = "Standard"
             account_replication_type = "LRS"
