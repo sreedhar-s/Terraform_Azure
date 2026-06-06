@@ -110,7 +110,7 @@ module "nsg_association" {
     source = "../../modules/nsg_association"
 
     nsg_association = {
-        network_interface_id = module.network_interface.nic_id["nic"]
+        network_interface_id = module.network_interface.nic_id["nic1"]
         network_security_group_id = module.network_security_group.nsg_id["nsg1"]
     }
 
