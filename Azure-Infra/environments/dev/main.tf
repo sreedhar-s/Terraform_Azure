@@ -52,7 +52,7 @@ module "private_endpoint" {
 
             private_service_connection = {
                 name                           = "stg-privateserviceconnection"
-                private_connection_resource_id = module.storage_account.stg_acc["stg_acc1"].id
+                private_connection_resource_id = module.storage_account.stg_id["stg_acc1"]
                 is_manual_connection           =  false
                 subresource_names              = ["blob"]
             }
