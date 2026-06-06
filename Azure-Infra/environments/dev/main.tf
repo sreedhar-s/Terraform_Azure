@@ -47,7 +47,7 @@ module "private_endpoint" {
         dtstgdev4001-pvl = {
             name                = "dtstgdev4001-pvl"
             location            = "southeastasia"
-            resource_group_name = module.resource_group.rg_name[stg_rg]
+            resource_group_name = module.resource_group.rg_name["stg_rg"]
             subnet_id           = data.azurerm_subnet.snt.id
 
             private_service_connection = {
@@ -63,6 +63,8 @@ module "private_endpoint" {
             }
         }
     }
+
+    depends_on = [ module.storage_account ]
 }
 
 module "dns_record" {
@@ -79,4 +81,6 @@ module "dns_record" {
             records             = [module.private_endpoint.pvl["dtstgdev4001-pvl"].private_ip_address]
         }
     }
+
+    depends_on = [ module.private_endpoint ]
 }
