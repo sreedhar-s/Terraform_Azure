@@ -6,6 +6,7 @@ variable "linux_vm" {
         size                = string
         admin_username      = string
         admin_password      = string
+        disable_password_authentication = bool
 
         network_interface_ids = list(string)
 
@@ -17,6 +18,8 @@ variable "linux_vm" {
         boot_diagnostics = object({
             storage_account_uri = string
         })
+
+        secure_boot_enabled = bool
 
         encryption_at_host_enabled = bool
 

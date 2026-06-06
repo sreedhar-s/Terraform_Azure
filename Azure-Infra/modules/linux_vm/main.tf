@@ -6,6 +6,7 @@ resource "azurerm_linux_virtual_machine" "linuxvm" {
   size                = each.value.size
   admin_username      = each.value.admin_username
   admin_password      = each.value.admin_password
+  disable_password_authentication = each.value.disable_password_authentication
 
   network_interface_ids = [
     each.value.network_interface_ids[0]
@@ -19,6 +20,8 @@ resource "azurerm_linux_virtual_machine" "linuxvm" {
   boot_diagnostics {
     storage_account_uri = each.value.boot_diagnostics.storage_account_uri
   }
+
+  secure_boot_enabled = each.value.secure_boot_enabled
 
   encryption_at_host_enabled = true
 

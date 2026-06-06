@@ -237,6 +237,7 @@ module "linux_wm" {
             size                = "Standard_B2s"
             admin_username      = "azureadmin"
             admin_password      = "CA3@#mw(fg262023"
+            disable_password_authentication = false
 
             network_interface_ids = [
                 module.network_interface.nic_id["nic2"]
@@ -246,6 +247,8 @@ module "linux_wm" {
                 caching              = "ReadWrite"
                 storage_account_type = "Standard_LRS"
             }
+            
+            secure_boot_enabled = true
 
             encryption_at_host_enabled = true
 
