@@ -95,6 +95,8 @@ module "network_interface" {
             private_ip_address_allocation = "Dynamic"
         }
     }
+
+    depends_on = [ module.resource_group, module.subnet ]
 }
 
 module "network_security_group" {
