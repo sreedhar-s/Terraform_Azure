@@ -8,16 +8,12 @@ resource "azurerm_windows_virtual_machine" "windowsvm" {
   admin_password      = each.value.admin_password
 
   network_interface_ids = [
-    each.value.network_interface[0]
+    each.value.network_interface_ids[0]
   ]
 
   os_disk {
-    caching              = each.value.caching
-    storage_account_type = each.value.storage_account_type
-  }
-
-  boot_diagnostics {
-    storage_account_uri = each.value.storage_account_uri
+    caching              = each.value.os_disk.caching
+    storage_account_type = each.value.os_disk.storage_account_type
   }
 
   encryption_at_host_enabled = true
