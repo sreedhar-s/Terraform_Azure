@@ -14,6 +14,10 @@ variable "windows_vm" {
             storage_account_type = string 
         })
 
+        boot_diagnostics = object({
+            storage_account_uri = string
+        })
+
         encryption_at_host_enabled = bool
 
         source_image_id = string

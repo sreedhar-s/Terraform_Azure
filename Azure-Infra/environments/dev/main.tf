@@ -128,6 +128,36 @@ module "nsg_association" {
     ]
 }
 
+module "storage_account" {
+    source = "../../modules/storage_account"
+
+    stg_acc = {
+        stg_acc1 = {
+            name = "dtstgdiag5001"
+            resource_group_name      = module.resource_group_name.rg_name["stg_rg"]
+            location                 = "southeastasia"
+            account_tier             = "Standard"
+            account_replication_type = "LRS"
+            public_network_access_enabled = false
+
+            blob_properties = {
+                container_delete_retention_policy = {
+                    days = 7
+                }
+
+                delete_retention_policy ={
+                    days = 7
+                }
+            }
+
+            tags = {
+                "Application name" = "Testing",
+                "Environment" = "Dev"
+            }
+        }
+    }
+}
+
 module "windows_wm" {
     source = "../../modules/windows_vm"
 
@@ -153,13 +183,18 @@ module "windows_wm" {
 
             source_image_id = data.azurerm_shared_image_version.image_version.id
 
+            boot_diagnostics = {
+                storage_account_uri = module.storage_account.stg_acc["stg_acc1"].primary_bob_endpoint
+            }
+
             tags = {
                 "Application name" = "Testing",
                 "Environment" = "Dev"
             }
 
             depends_on = [ 
-                module.network_interface
+                module.network_interface,
+                module.storage_account
             ]
         }
     }

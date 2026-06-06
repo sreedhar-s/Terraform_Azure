@@ -16,6 +16,10 @@ resource "azurerm_windows_virtual_machine" "windowsvm" {
     storage_account_type = each.value.os_disk.storage_account_type
   }
 
+  boot_diagnostics {
+    storage_account_uri = each.value.boot_diagnostics.storage_account_uri
+  }
+
   encryption_at_host_enabled = true
 
   source_image_id = each.value.source_image_id

@@ -29,3 +29,4 @@ data "azurerm_shared_image_version" "image_version" {
   gallery_name        = data.azurerm_shared_image_gallery.image-gallery.name
   resource_group_name = data.azurerm_resource_group.gallery_rg.name
 }
+

@@ -13,6 +13,11 @@ rgs = {
         name = "DT-VM-RG"
         location = "southeastasia"
     }
+
+    stg_rg = {
+        name = "DT-STG-DEV-RG"
+        location = "southeastasia"
+    }
 }
 
 vnt = {
