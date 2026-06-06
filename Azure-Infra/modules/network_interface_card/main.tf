@@ -5,9 +5,9 @@ resource "azurerm_network_interface" "nic" {
   resource_group_name = each.value.resource_group_name
 
   ip_configuration {
-    name                          = each.value.ip_config_name
-    subnet_id                     = each.value.subnet_id
-    private_ip_address_allocation = each.value.private_ip_address_allocation
+    name                          = each.value.ip_configuration[0].name
+    subnet_id                     = each.value.ip_configuration[0].subnet_id
+    private_ip_address_allocation = each.value.ip_configuration[0].private_ip_address_allocation
   }
 }
 
