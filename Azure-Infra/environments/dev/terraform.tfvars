@@ -7,6 +7,11 @@ rgs = {
     rtb_rg = {
         name = "DT-RTB-RG"
         location = "southeastasia"
+    },
+
+    vm_rg = {
+        name = "DT-VM-RG"
+        location = "southeastasia"
     }
 }
 
@@ -50,5 +55,13 @@ routes = {
         address_prefix = "0.0.0.0/0"
         next_hop_type = "VirtualAppliance"
         next_hop_in_ip_address = "10.101.0.196"
+    }
+}
+
+nsg = {
+    nsg1 = {
+        name = "DT-DEV-TST-4001-nsg"
+        location = "southeastasia"
+        resource_group_name = "DT-VM-RG"
     }
 }

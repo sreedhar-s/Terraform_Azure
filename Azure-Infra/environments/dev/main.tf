@@ -79,4 +79,74 @@ module "route_table_snt_association" {
     }
 
     depends_on = [ module.route_table, module.subnet ]
+} 
+
+module "network_interface" {
+    source = "../../modules/network_interface_card"
+
+    nic = {
+        name                = "DT-TST-DEV-4001-nic"
+        location            = "southeastasia"
+        resource_group_name = module.resource_group.rg_name["vm_rg"]
+
+        ip_configuration = {
+            name                          = "ipconfig1"
+            subnet_id                     = module.subnet.snt_id["snt1"]
+            private_ip_address_allocation = "Dynamic"
+        }
+    }
+}
+
+module "network_security_group" {
+    source = "../../modules/network_security_group"
+    nsg = var.nsg
+}
+
+module "nsg_association" {
+    source = "../../modules/nsg_association"
+
+    nsg_association = {
+        network_interface_id = module.network_interface.nic_id["nic"]
+        network_security_group_id = module.network_security_group.nsg_id["nsg1"]
+    }
+
+    depends_on = [ 
+        module.network_interface,
+        module.network_security_group
+    ]
+}
+
+module "windows_wm" {
+    source = "../../modules/windows_vm"
+
+    windows_vm = {
+        name                = "DT-TST-DEV-4001"
+        resource_group_name = module.resource_group.rg_name["vm_rg"]
+        location            = "southeastasia"
+        size                = "Standard_B2s"
+        admin_username      = "azureadmin"
+        admin_password      = "CA3@#mw(fg262023"
+
+        network_interface_ids = [
+            module.network_interface.nic_id["nic"]
+        ]
+
+        os_disk = {
+            caching              = "ReadWrite"
+            storage_account_type = "Standard_LRS"
+        }
+
+        encryption_at_host_enabled = true
+
+        source_image_id = data.azurerm_shared_image_version.image_version.id
+
+        tags = {
+            "Application name" = "Testing",
+            "Environment" = "Dev"
+        }
+
+        depends_on = [ 
+            module.network_niterface
+        ]
+    }
 }
