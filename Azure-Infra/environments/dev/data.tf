@@ -17,7 +17,7 @@ data "azurerm_shared_image_gallery" "image-gallery" {
 
 data "azurerm_shared_image" "shared_image" {
   provider = azurerm.Infra-Monitoring-Backup
-  name                = "Windows_2022_FEB_2026"
+  name                = "Ubutu-22.04-Jan2026"
   gallery_name        = data.azurerm_shared_image_gallery.image-gallery.name
   resource_group_name = data.azurerm_resource_group.gallery_rg.name
 }
