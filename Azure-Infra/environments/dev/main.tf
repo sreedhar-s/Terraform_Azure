@@ -89,11 +89,11 @@ module "network_interface" {
         location            = "southeastasia"
         resource_group_name = module.resource_group.rg_name["vm_rg"]
 
-        ip_configuration = {
+        ip_configuration = [{
             name                          = "ipconfig1"
             subnet_id                     = module.subnet.snt_id["snt1"]
             private_ip_address_allocation = "Dynamic"
-        }
+        }]
     }
 
     depends_on = [ module.resource_group, module.subnet ]
