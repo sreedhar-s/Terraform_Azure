@@ -95,6 +95,18 @@ module "network_interface" {
                 subnet_id                     = module.subnet.snt_id["snt1"]
                 private_ip_address_allocation = "Dynamic"
             }]
+        },
+
+        "nic2" = {
+            name                = "DT-TST-DEV-4002-nic"
+            location            = "southeastasia"
+            resource_group_name = module.resource_group.rg_name["vm_rg"]
+
+            ip_configuration = [{
+                name                          = "ipconfig1"
+                subnet_id                     = module.subnet.snt_id["snt1"]
+                private_ip_address_allocation = "Dynamic"
+            }]
         }
     }
 
@@ -108,6 +120,12 @@ module "network_security_group" {
             name = "DT-DEV-TST-4001-nsg"
             location = "southeastasia"
             resource_group_name = module.resource_group.rg_name["vm_rg"]
+        },
+
+        nsg2 = {
+            name = "DT-DEV-TST-4002-nsg"
+            location = "southeastasia"
+            resource_group_name = module.resource_group.rg_name["vm_rg"]
         }
     }
 
@@ -118,8 +136,15 @@ module "nsg_association" {
     source = "../../modules/nsg_association"
 
     nsg_association = {
-        network_interface_id = module.network_interface.nic_id["nic1"]
-        network_security_group_id = module.network_security_group.nsg_id["nsg1"]
+        nsg_nic_association1 = {
+            network_interface_id = module.network_interface.nic_id["nic1"]
+            network_security_group_id = module.network_security_group.nsg_id["nsg1"]
+        },
+
+        nsg_nic_association2 = {
+            network_interface_id = module.network_interface.nic_id["nic2"]
+            network_security_group_id = module.network_security_group.nsg_id["nsg2"]
+        },
     }
 
     depends_on = [ 
@@ -200,72 +225,6 @@ module "windows_wm" {
         }
     }
 }
-
-module "network_interface" {
-    source = "../../modules/network_interface_card"
-
-    nic = {
-        "nic1" = {
-            name                = "DT-TST-DEV-4001-nic"
-            location            = "southeastasia"
-            resource_group_name = module.resource_group.rg_name["vm_rg"]
-
-            ip_configuration = [{
-                name                          = "ipconfig1"
-                subnet_id                     = module.subnet.snt_id["snt1"]
-                private_ip_address_allocation = "Dynamic"
-            }]
-        },
-
-         "nic2" = {
-            name                = "DT-TST-DEV-4002-nic"
-            location            = "southeastasia"
-            resource_group_name = module.resource_group.rg_name["vm_rg"]
-
-            ip_configuration = [{
-                name                          = "ipconfig1"
-                subnet_id                     = module.subnet.snt_id["snt1"]
-                private_ip_address_allocation = "Dynamic"
-            }]
-        }
-    }
-
-    depends_on = [ module.resource_group, module.subnet ]
-}
-
-module "network_security_group" {
-    source = "../../modules/network_security_group"
-    nsg = {
-        nsg1 = {
-            name = "DT-DEV-TST-4001-nsg"
-            location = "southeastasia"
-            resource_group_name = module.resource_group.rg_name["vm_rg"]
-        },
-
-        nsg2 = {
-            name = "DT-DEV-TST-4002-nsg"
-            location = "southeastasia"
-            resource_group_name = module.resource_group.rg_name["vm_rg"]
-        }
-    }
-
-    depends_on = [ module.resource_group]
-}
-
-module "nsg_association" {
-    source = "../../modules/nsg_association"
-
-    nsg_association = {
-        network_interface_id = module.network_interface.nic_id["nic2"]
-        network_security_group_id = module.network_security_group.nsg_id["nsg2"]
-    }
-
-    depends_on = [ 
-        module.network_interface,
-        module.network_security_group
-    ]
-}
-
 
 module "linux_wm" {
     source = "../../modules/linux_vm"
