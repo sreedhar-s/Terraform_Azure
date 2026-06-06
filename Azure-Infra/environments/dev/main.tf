@@ -184,7 +184,7 @@ module "windows_wm" {
             source_image_id = data.azurerm_shared_image_version.image_version.id
 
             boot_diagnostics = {
-                storage_account_uri = module.storage_account.stg_acc["stg_acc1"].primary_bob_endpoint
+                storage_account_uri = module.storage_account.primary_blob_endpoint["stg_acc1"]
             }
 
             tags = {
