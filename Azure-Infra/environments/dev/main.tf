@@ -66,8 +66,10 @@ module "private_endpoint" {
 }
 
 module "dns_record" {
+    providers = {
+        azurerm = azurerm.Olam-Shared-Infrastructure
+    }
     source = "../../modules/dns_record"
-
     dns_record = {
         dns_record1 = {
             name                = dtstgdev4001
