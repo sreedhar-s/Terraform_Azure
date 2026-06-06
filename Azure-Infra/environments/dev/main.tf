@@ -148,7 +148,7 @@ module "windows_wm" {
         }
 
         depends_on = [ 
-            module.network_niterface
+            module.network_interface
         ]
     }
 }
