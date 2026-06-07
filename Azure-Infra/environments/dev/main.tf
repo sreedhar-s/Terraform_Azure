@@ -39,7 +39,7 @@ module "private_endpoint" {
     source = "../../modules/private_end_point"
 
     pvl = {
-        DT-KVT-DEV-4001-pvl = {
+        dt-sdb-dev-4001-pvl = {
             name                = "dt-sdb-dev-4001-pvl"
             location            = "southeastasia"
             resource_group_name = module.resource_group.rg_name["mysql_rg"]
