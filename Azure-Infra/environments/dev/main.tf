@@ -2,51 +2,62 @@ module "resource_group" {
     source = "../../modules/resource_group"
 
     rg = {
-        pgsql_rg = {
+        mssql_rg = {
             name = "DT-DB-RG"
             location = "southeastasia"
         }
     }
 }
 
-module "postgressql_server" {
-    source = "../../modules/postgressql_server"
+module "mssql_server" {
+    source = "../../modules/databases/mssql_server"
 
-    postgressql-server = {
+    sql-server = {
         "server1" = {
-            name                          = "dt-pdb-dev-4001"
-            resource_group_name           = module.resource_group.rg_name["pgsql_rg"]
-            location                      = "southeastasia"
-            version                       = "18"
+            name                         = "dt-sdb-dev-4001"
+            resource_group_name          = module.resource_group.rg_name["mssql_rg"]
+            location                     = "southeastasia"
             public_network_access_enabled = false
-            administrator_login           = "psqladmin"
-            administrator_password        = "pssql@123"
-
-            storage_mb   = 32768
-            storage_tier = "P4"
-
-            sku_name   = "GP_Standard_D2ds_v5"
+            version                      = "12.0"
+            administrator_login          = "sqladmin"
+            administrator_login_password = "4,_/6Mhwk0{>SkDX"
         }
     }
 
     depends_on = [ module.resource_group ]
 }
 
+module "mssql_db" {
+    source = "../../modules/databases/mssql_database"
+    sql-db = {
+        "db1" = {
+            name         = "test"
+            server_id    = module.mssql_server.mssqlserver_id["server1"]
+            collation    = "SQL_Latin1_General_CP1_CI_AS"
+            license_type = "LicenseIncluded"
+            max_size_gb  = 2
+            sku_name     = "GP_S_Gen5_2"
+        }
+    }
+
+    depends_on = [ module.mssql_server ]
+}
+
 module "private_endpoint" {
-    source = "../../modules/private_end_point"
+    source = "../../modules/networking/private_end_point"
 
     pvl = {
         dt-sdb-dev-4001-pvl = {
-            name                = "dt-pdb-dev-4001-pvl"
+            name                = "dt-sdb-dev-4001-pvl"
             location            = "southeastasia"
-            resource_group_name = module.resource_group.rg_name["pgsql_rg"]
+            resource_group_name = module.resource_group.rg_name["mssql_rg"]
             subnet_id           = data.azurerm_subnet.snt.id
 
             private_service_connection = {
-                name                           = "mysql-privateserviceconnection"
-                private_connection_resource_id = module.postgressql_server.postgressqlserver_id["server1"]
+                name                           = "mssql-privateserviceconnection"
+                private_connection_resource_id = module.mssql_server.mssqlserver_id["server1"]
                 is_manual_connection           =  false
-                subresource_names              = ["postgresqlServer"]
+                subresource_names              = ["sqlServer"]
             }
 
             private_dns_zone_group = {
@@ -56,5 +67,5 @@ module "private_endpoint" {
         }
     }
 
-    depends_on = [ module.postgressql_server ]
+    depends_on = [ module.mssql_server ]
 }
