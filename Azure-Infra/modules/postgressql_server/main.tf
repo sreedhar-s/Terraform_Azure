@@ -1,5 +1,5 @@
 resource "azurerm_postgresql_flexible_server" "postgresql-flexible-server" {
-  for_each = each.value  
+  for_each = var.postgressql-server
   name                          = each.value.name
   resource_group_name           = each.value.resource_group_name
   location                      = each.value.location
