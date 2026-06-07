@@ -17,7 +17,7 @@ module "key_vault" {
         "kvt1" = {
             name                        = "DT-KVT-DEV-4001"
             location                    = "southeastasia"
-            resource_group_name         = module.resource_group.rg_name["DT-KVT-RG"]
+            resource_group_name         = module.resource_group.rg_name["kvt_rg"]
             tenant_id                   = data.azurerm_client_config.current.tenant_id
             soft_delete_retention_days  = 90
             purge_protection_enabled    = false
