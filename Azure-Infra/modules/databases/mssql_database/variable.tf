@@ -6,5 +6,6 @@ variable "mssql-db" {
         license_type = string
         max_size_gb  = number
         sku_name     = string
+        storage_account_type = string
     }))
 }
