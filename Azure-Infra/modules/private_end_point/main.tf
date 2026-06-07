@@ -1,4 +1,4 @@
-resource "azurerm_private_endpoint" "kvt_private_endpoint" {
+resource "azurerm_private_endpoint" "private_endpoint" {
   for_each = var.pvl
   name                = each.value.name
   location            = each.value.location

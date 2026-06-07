@@ -39,7 +39,7 @@ module "private_endpoint" {
             subnet_id           = data.azurerm_subnet.snt.id
 
             private_service_connection = {
-                name                           = "stg-privateserviceconnection"
+                name                           = "kvt-privateserviceconnection"
                 private_connection_resource_id = module.key_vault.kvt_id["kvt1"]
                 is_manual_connection           =  false
                 subresource_names              = ["vault"]
@@ -62,7 +62,7 @@ module "dns_record" {
     source = "../../modules/dns_record"
     dns_record = {
         dns_record1 = {
-            name                = "DT-KVT-DEV-4001"
+            name                = lower("DT-KVT-DEV-4001")
             zone_name           = data.azurerm_private_dns_zone.private_dns_zone.name
             resource_group_name = data.azurerm_private_dns_zone.private_dns_zone.resource_group_name
             ttl                 = 10

@@ -1,6 +1,6 @@
 data "azurerm_private_dns_zone" "private_dns_zone" {
   provider = azurerm.Olam-Shared-Infrastructure
-  name                = "privatelink.blob.core.windows.net"
+  name                = "privatelink.vaultcore.azure.net"
   resource_group_name = "OI-DNS-PRD-EG"
 }
 
