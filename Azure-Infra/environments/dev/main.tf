@@ -12,7 +12,7 @@ module "resource_group" {
 module "mssql_server" {
     source = "../../modules/databases/mssql_server"
 
-    sql-server = {
+    mssql-server = {
         "server1" = {
             name                         = "dt-sdb-dev-4001"
             resource_group_name          = module.resource_group.rg_name["mssql_rg"]
@@ -29,7 +29,7 @@ module "mssql_server" {
 
 module "mssql_db" {
     source = "../../modules/databases/mssql_database"
-    sql-db = {
+    mssql-db = {
         "db1" = {
             name         = "test"
             server_id    = module.mssql_server.mssqlserver_id["server1"]
