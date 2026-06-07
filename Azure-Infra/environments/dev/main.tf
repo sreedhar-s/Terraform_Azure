@@ -36,7 +36,7 @@ module "mssql_db" {
             collation    = "SQL_Latin1_General_CP1_CI_AS"
             license_type = "LicenseIncluded"
             max_size_gb  = 2
-            sku_name     = "GP_Gen5_2"
+            sku_name     = "GP_Gen5_4"
             storage_account_type = "Local"
         }
     }
