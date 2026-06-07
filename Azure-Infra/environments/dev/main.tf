@@ -25,7 +25,7 @@ module "postgressql_server" {
             storage_mb   = 32768
             storage_tier = "P4"
 
-            sku_name   = "GP_Standard_D2s_v5"
+            sku_name   = "GP_Standard_D2ds_v5"
         }
     }
 
