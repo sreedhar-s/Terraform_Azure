@@ -1,6 +1,6 @@
 data "azurerm_private_dns_zone" "private_dns_zone" {
   provider = azurerm.Olam-Shared-Infrastructure
-  name                = "privatelink.mysql.database.azure.com"
+  name                = "privatelink.postgres.database.azure.com"
   resource_group_name = "OI-DNS-PRD-EG"
 }
 
