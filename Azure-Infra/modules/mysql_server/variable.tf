@@ -13,7 +13,6 @@ variable "mysql-flexible-server" {
         storage = object({
             size_gb = number
             auto_grow_enabled = bool
-            io_scaling_enabled = bool
         })
     }))
 }

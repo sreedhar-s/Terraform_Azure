@@ -28,7 +28,6 @@ module "mysql_server" {
             storage = {
                 size_gb = 10
                 auto_grow_enabled = false
-                io_scaling_enabled = false
             }
         }
     }
