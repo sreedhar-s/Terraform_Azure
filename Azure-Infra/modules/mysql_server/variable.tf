@@ -7,7 +7,7 @@ variable "mysql-flexible-server" {
         administrator_password = string
         backup_retention_days  = number
         sku_name               = string
-        public_network_access = bool
+        public_network_access = string
         version = string
 
         storage = object({
