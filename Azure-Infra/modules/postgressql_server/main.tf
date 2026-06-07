@@ -2,7 +2,7 @@ resource "azurerm_postgresql_flexible_server" "postgresql-flexible-server" {
   for_each = each.value  
   name                          = each.value.name
   resource_group_name           = each.value.resource_group_name
-  location                      = aeach.value.location
+  location                      = each.value.location
   version                       = each.value.version
   public_network_access_enabled = each.value.public_network_access_enabled
   administrator_login           = each.value.administrator_login
